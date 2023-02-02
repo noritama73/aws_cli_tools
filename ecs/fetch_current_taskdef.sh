@@ -1,4 +1,2 @@
-taskdef=`aws ecs describe-services --cluster open-account --services account-manager-api --profile $1 | jq -r '.services[0].taskDefinition'`
-FAMILY=`echo $taskdef | awk -F'[:]' '{print $6}' | awk -F'[/]' '{print $2}'`
-REVISION=`echo $taskdef | awk -F'[:]' '{print $7}'`
-echo $FAMILY":"$REVISION
+taskdef=`aws ecs describe-services --profile $1 --cluster $2 --services $3 | jq -r '.services[0].taskDefinition' | awk -F'[/]' '{print $2}'`
+echo $taskdef
